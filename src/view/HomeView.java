@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import javax.swing.JPanel;
+import java.awt.font.*;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import controller.ViewManager;
 
@@ -13,6 +17,7 @@ import controller.ViewManager;
 public class HomeView extends JPanel implements ActionListener {
 	
 	private ViewManager manager;		// manages interactions between the views, model, and database
+	private JButton logoutButton;
 	
 	/**
 	 * Constructs an instance (or objects) of the HomeView class.
@@ -40,8 +45,9 @@ public class HomeView extends JPanel implements ActionListener {
 		// this is a placeholder for this view and should be removed once you start
 		// building the HomeView.
 		
-		this.add(new javax.swing.JLabel("HomeView", javax.swing.SwingConstants.CENTER));
+		this.setLayout(null);
 		
+		initLogoutButton();
 		// TODO
 		//
 		// this is where you should build the HomeView (i.e., all the components that
@@ -62,6 +68,13 @@ public class HomeView extends JPanel implements ActionListener {
 		throw new IOException("ERROR: The HomeView class is not serializable.");
 	}
 	
+	private void initLogoutButton() {
+		logoutButton = new JButton("Logout");
+		logoutButton.setBounds(225, 400, 100, 40);
+		logoutButton.addActionListener(this);
+		
+		this.add(logoutButton);
+	}
 	///////////////////// OVERRIDDEN METHODS //////////////////////////////////////////
 	
 	/*
@@ -72,7 +85,13 @@ public class HomeView extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+		Object source = e.getSource();
+
+		if(source.equals(logoutButton)) {
+			
+			manager.logout();
+			
+		}
 		// TODO
 		//
 		// this is where you'll setup your action listener, which is responsible for

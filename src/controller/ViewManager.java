@@ -37,7 +37,11 @@ public class ViewManager {
 	 * @param accountNumber
 	 * @param pin
 	 */
-	
+	//public void createAccount() {
+		// params should be whatever values are needed to be formatted as account string to be passed into insert account method in database file
+		//account.toString();
+		//db.insertAccount(account);
+	//}
 	public void login(String accountNumber, char[] pin) {
 		try {
 			account = db.getAccount(Long.valueOf(accountNumber), Integer.valueOf(new String(pin)));
@@ -53,6 +57,26 @@ public class ViewManager {
 			}
 		} catch (NumberFormatException e) {
 			// ignore
+		}
+	}
+	
+	public void logout() {
+		try {			
+			int choice = JOptionPane.showConfirmDialog(
+				views,
+				"Are you sure?",
+				"Logging Out",
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE
+			);
+			
+			if (choice == 0) {
+				db.shutdown();
+				account = null;
+				switchTo(ATM.LOGIN_VIEW);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
