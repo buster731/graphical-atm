@@ -88,16 +88,7 @@ public class HomeView extends JPanel implements ActionListener {
 		Object source = e.getSource();
 
 		if(source.equals(logoutButton)) {
-			
 			manager.logout();
-			
 		}
-		// TODO
-		//
-		// this is where you'll setup your action listener, which is responsible for
-		// responding to actions the user might take in this view (an action can be a
-		// user clicking a button, typing in a textfield, etc.).
-		//
-		// feel free to use my action listener in LoginView.java as an example.
 	}
 }

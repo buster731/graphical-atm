@@ -188,7 +188,8 @@ public class Database {
 					"state = ?, " +
 					"zip = ? " +
 				"WHERE account_number = ?"
-			);		
+			);
+			
 			insertStmt.setInt(1, account.getUser().getPin());
 			insertStmt.setDouble(2, account.getBalance());
 			insertStmt.setLong(3, account.getUser().getPhone());
@@ -207,6 +208,24 @@ public class Database {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Retrieves the largest account number that exists in the database.
+	 * 
+	 * @return
+	 * @throws SQLException
+	 */
+	
+	public long getMaxAccountNumber() throws SQLException {
+		stmt = conn.createStatement();
+		rs = stmt.executeQuery("SELECT MAX(account_number) FROM accounts");
+		
+		if (rs.next()) {
+			return rs.getLong(1);
+		} else {
+			return -1;
+		}
 	}
 	
 	/**
@@ -243,7 +262,7 @@ public class Database {
 	 * @throws SQLException
 	 */
 	
-	private void setup() throws SQLException {
+	private void setup() throws SQLException {		
 		createAccountsTable();
 		insertDefaultAccount();
 	}
@@ -289,6 +308,7 @@ public class Database {
 	private void insertDefaultAccount() throws SQLException {
 		stmt = conn.createStatement();
 		rs = stmt.executeQuery("SELECT COUNT(*) FROM accounts");
+		
 		if (rs.next() && rs.getInt(1) == 0) {
 			PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO accounts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			

@@ -263,9 +263,13 @@ public class CreateView extends JPanel implements ActionListener {
 		Object source = e.getSource();
 
 		if(source.equals(confirmButton)) {
-		//	String acctStr = ( pinField.getText() + FNameField.getText() + LNameField.getText() + )
-			//manager.createAccount(FNameField.getText(), LNameField.getText(), pinField.getPassword(), DOBField.getText(), PhoneNumField.getText(), AddressField.getText(), CityField.getText(), StateField.getText(), ZipField.getText());
+			String acctStr = (pinField.getPassword() + FNameField.getText() + LNameField.getText()  );
+			manager.createAccount(acctStr);
 			//this needs to be reformatted as a string (account) to be passed into view manager to insert into db
+		}
+		
+		if(source.equals(cancelButton)) {
+			manager.cancelCreate();
 		}
 		// TODO
 		//

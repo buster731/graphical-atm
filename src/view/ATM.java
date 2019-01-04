@@ -65,7 +65,7 @@ public class ATM extends JFrame {
 		// configure the application frame
 		
 		this.add(views);
-		this.setBounds(100, 100, 500, 500);
+		this.setSize(500, 500);
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
