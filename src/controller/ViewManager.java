@@ -37,11 +37,11 @@ public class ViewManager {
 	 * @param accountNumber
 	 * @param pin
 	 */
-	//public void createAccount() {
+	public void createAccount(String account) {
 		// params should be whatever values are needed to be formatted as account string to be passed into insert account method in database file
-		//account.toString();
-		//db.insertAccount(account);
-	//}
+		account.toString();
+		db.insertAccount(account);
+	}
 	public void login(String accountNumber, char[] pin) {
 		try {
 			account = db.getAccount(Long.valueOf(accountNumber), Integer.valueOf(new String(pin)));
