@@ -41,7 +41,6 @@ public class LoginView extends JPanel implements ActionListener {
 		super();
 		
 		this.manager = manager;
-		this.errorMessageLabel = new JLabel("", SwingConstants.CENTER);
 		initialize();
 	}
 	
@@ -153,6 +152,7 @@ public class LoginView extends JPanel implements ActionListener {
 	}
 	
 	private void initErrorMessageLabel() {
+		errorMessageLabel = new JLabel("", SwingConstants.CENTER);
 		errorMessageLabel.setBounds(0, 240, 500, 35);
 		errorMessageLabel.setFont(new Font("DialogInput", Font.ITALIC, 14));
 		errorMessageLabel.setForeground(Color.RED);

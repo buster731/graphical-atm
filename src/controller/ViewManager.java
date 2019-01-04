@@ -39,7 +39,7 @@ public class ViewManager {
 	 */
 	
 	public void login(String accountNumber, char[] pin) {
-		LoginView lv = ((LoginView) views.getComponents()[ATM.LOGIN_VIEW_INDEX]);
+		LoginView lv = (LoginView) views.getComponents()[ATM.LOGIN_VIEW_INDEX];
 		
 		try {
 			account = db.getAccount(Long.valueOf(accountNumber), Integer.valueOf(new String(pin)));

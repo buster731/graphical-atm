@@ -72,7 +72,7 @@ public class HomeView extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+				
 		// TODO
 		//
 		// this is where you'll setup your action listener, which is responsible for
