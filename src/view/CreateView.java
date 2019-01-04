@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -25,9 +26,9 @@ public class CreateView extends JPanel implements ActionListener {
 	private JPasswordField pinField;
 	private JTextField FNameField;
 	private JTextField LNameField;
-	private JComboBox<?> MonthField;
-	private JComboBox<?> DateField;
-	private JComboBox<?> YearField;
+	private JComboBox<?> MonthBox;
+	private JComboBox<?> DateBox;
+	private JComboBox<?> YearBox;
 	private JTextField PhoneNumField;
 	private JTextField PhoneNumField1;
 	private JTextField PhoneNumField2;
@@ -113,33 +114,35 @@ public class CreateView extends JPanel implements ActionListener {
 	}
 	
 	private void initDOBField() {
-		String[] dates = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
+		
+		String[] dates = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
 		String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 		String[] years = {"2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010", "2009", "2008", "2007", "2006", "2005", "2004", "2003", "2002", "2001", "2000", "1999", "1998", "1997", "1996", "1995", "1994", "1993", "1992", "1991", "1990", "1989", "1988", "1987", "1986", "1985", "1984", "1983", "1982", "1981", "1980", "1979", "1978", "1977", "1976", "1975", "1974", "1973", "1972", "1971", "1970", "1969", "1968", "1967", "1966", "1965", "1964", "1963", "1962", "1961",  "1960", "1959", "1958", "1957", "1956", "1955", "1954", "1953", "1952", "1951", "1950", "1949", "1948", "1947", "1946", "1945", "1944", "1943", "1942", "1941", "1940", "1939", "1938", "1937", "1936", "1935", "1934", "1933", "1932", "1931", "1930", "1929", "1928", "1927", "1926", "1925", "1924", "1923", "1922", "1921", "1920", "1919", "1918", "1917", "1916", "1915", "1914", "1913", "1912", "1911", "1910", "1909", "1908", "1907", "1906", "1905", "1904", "1903", "1902", "1901", "1900"};
-		JComboBox<?> MonthField = new JComboBox<Object>(months);
-		MonthField.setBounds(205, 145, 50, 35);
+		MonthBox = new JComboBox<Object>(months);
+		DateBox = new JComboBox<Object>(dates);
+		YearBox = new JComboBox<Object>(years);
+
+		MonthBox.setBounds(205, 145, 50, 35);
 		JLabel DOBM = new JLabel("Date of Birth: M: ", SwingConstants.RIGHT);
-		DOBM.setLabelFor(MonthField);
+		DOBM.setLabelFor(MonthBox);
 		DOBM.setBounds(55, 145, 150, 35);
 		DOBM.setFont(new Font("DialogInput", Font.BOLD, 14));
-		JComboBox<?> DateField = new JComboBox<Object>(dates);
-		DateField.setBounds(280, 145, 50, 35);
+		DateBox.setBounds(280, 145, 50, 35);
 		JLabel DOBD = new JLabel(" D: ", SwingConstants.RIGHT);
-		DOBD.setLabelFor(DateField);
+		DOBD.setLabelFor(DateBox);
 		DOBD.setBounds(250, 145, 35, 35);
 		DOBD.setFont(new Font("DialogInput", Font.BOLD, 14));
-		JComboBox<?> YearField = new JComboBox<Object>(years);
-		YearField.setBounds(365, 145, 65, 35);
+		YearBox.setBounds(365, 145, 65, 35);
 		JLabel DOBY = new JLabel(" Y: ", SwingConstants.RIGHT);
 		DOBY.setBounds(330, 145, 35, 35);
-		DOBY.setLabelFor(YearField);
+		DOBY.setLabelFor(YearBox);
 		DOBY.setFont(new Font("DialogInput", Font.BOLD, 14));
 		this.add(DOBM);
-		this.add(MonthField);
+		this.add(MonthBox);
 		this.add(DOBD);
-		this.add(DateField);
+		this.add(DateBox);
 		this.add(DOBY);
-		this.add(YearField);
+		this.add(YearBox);
 	}
 	
 	private void initAddressField() {
@@ -196,9 +199,9 @@ public class CreateView extends JPanel implements ActionListener {
 	}
 	
 	private void initStateField() {
-		String[] states = {"AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"};
+		String[] states = {"AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"};
 		
-		JComboBox<?> StateField = new JComboBox<Object>(states);
+		StateField = new JComboBox<Object>(states);
 		JLabel label = new JLabel("State", SwingConstants.RIGHT);
 		label.setBounds(100, 305, 95, 35);
 		label.setLabelFor(StateField);
@@ -263,8 +266,34 @@ public class CreateView extends JPanel implements ActionListener {
 		Object source = e.getSource();
 
 		if(source.equals(confirmButton)) {
-			String acctStr = (pinField.getPassword() + FNameField.getText() + LNameField.getText()  );
-			manager.createAccount(acctStr);
+			String PhoneStr = PhoneNumField.getText() + PhoneNumField1.getText() + PhoneNumField2.getText();
+			long PhoneNum = Long.parseLong(PhoneStr);
+			int monthNum = 1 + MonthBox.getSelectedIndex();
+			String monthVal = "";
+			if(monthNum < 10) {
+				monthVal = "0" + Integer.toString(monthNum);
+			}
+			else {
+				monthVal = Integer.toString(monthNum);
+			}
+			
+			System.out.println(YearBox.getSelectedItem());
+			System.out.println(monthNum);
+			System.out.println(DateBox.getSelectedItem());
+			
+			String yearval = YearBox.getSelectedItem().toString();
+			int YearNum = Integer.valueOf(yearval);
+			
+			String dateStr = String.format("%d", YearNum, monthVal, DateBox.getSelectedItem());
+			int dateNum = Integer.parseInt(dateStr);
+			String pinVal =  String.copyValueOf(pinField.getPassword());
+			int pinNum = Integer.parseInt(pinVal);
+			try {
+				manager.createAccount(pinNum, dateNum, PhoneNum, FNameField.getText(), LNameField.getText(), AddressField.getText(), CityField.getText(), StateField.getSelectedItem().toString(), ZipField.getText());
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			//this needs to be reformatted as a string (account) to be passed into view manager to insert into db
 		}
 		

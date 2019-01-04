@@ -2,11 +2,13 @@ package controller;
 
 import java.awt.CardLayout;
 import java.awt.Container;
+import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
 import data.Database;
 import model.BankAccount;
+import model.User;
 import view.ATM;
 import view.LoginView;
 
@@ -36,11 +38,18 @@ public class ViewManager {
 	 * 
 	 * @param accountNumber
 	 * @param pin
+	 * @throws SQLException 
 	 */
-	public void createAccount(String account) {
-		// params should be whatever values are needed to be formatted as account string to be passed into insert account method in database file
-		account.toString();
+	public void createAccount(int pin, int dob, long phone, String firstName, String lastName, String streetAddress, String city, String state, String zip) throws SQLException {
+		double balance = 0.00;
+		User newUser = new User(pin, dob, phone, firstName, lastName, streetAddress, city, state, zip);
+		long acctNum = db.getMaxAccountNumber() + 1;
+		BankAccount account = new BankAccount('Y', acctNum, balance, newUser);
 		db.insertAccount(account);
+	}
+	
+	public void cancelCreate() {
+		switchTo(ATM.LOGIN_VIEW);
 	}
 	public void login(String accountNumber, char[] pin) {
 		LoginView lv = (LoginView) views.getComponents()[ATM.LOGIN_VIEW_INDEX];
