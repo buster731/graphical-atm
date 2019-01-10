@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -18,6 +19,9 @@ public class HomeView extends JPanel implements ActionListener {
 	
 	private ViewManager manager;		// manages interactions between the views, model, and database
 	private JButton logoutButton;
+	private JButton depositButton;
+	private JButton withdrawButton;
+	private JButton transferButton;
 	
 	/**
 	 * Constructs an instance (or objects) of the HomeView class.
@@ -48,6 +52,10 @@ public class HomeView extends JPanel implements ActionListener {
 		this.setLayout(null);
 		
 		initLogoutButton();
+		initDepositButton();
+		initWithdrawButton();
+		initTransferButton();
+
 		// TODO
 		//
 		// this is where you should build the HomeView (i.e., all the components that
@@ -75,6 +83,48 @@ public class HomeView extends JPanel implements ActionListener {
 		
 		this.add(logoutButton);
 	}
+	
+	private void initDepositButton() {
+		depositButton = new JButton("Deposit");
+		depositButton.setBounds(225, 150, 100, 40);
+		depositButton.addActionListener(this);
+		
+		this.add(depositButton);
+	}
+	
+	private void initWithdrawButton() {
+		withdrawButton = new JButton("Withdraw");
+		withdrawButton.setBounds(225, 200, 100, 40);
+		withdrawButton.addActionListener(this);
+		
+		this.add(withdrawButton);
+	}
+	
+	private void initTransferButton() {
+		transferButton = new JButton("Transfer");
+		transferButton.setBounds(225, 250, 100, 40);
+		transferButton.addActionListener(this);
+		
+		this.add(transferButton);
+	}
+	
+	public void initUserInfo() {
+		JLabel name = new JLabel("User Name: " + manager.showName(), SwingConstants.RIGHT);
+		name.setBounds(63, 60, 300, 45);
+		name.setFont(new Font("DialogInput", Font.BOLD, 14));
+		
+		JLabel acctNum = new JLabel("Account Number: " + manager.showAcctNum(), SwingConstants.RIGHT);
+		acctNum.setBounds(40, 10, 300, 45);
+		acctNum.setFont(new Font("DialogInput", Font.BOLD, 14));
+		
+		JLabel bal = new JLabel("Current Balance: $" + manager.showBal(), SwingConstants.RIGHT);
+		bal.setBounds(138, 95, 200, 45);
+		bal.setFont(new Font("DialogInput", Font.BOLD, 14));
+		
+		this.add(name);
+		this.add(acctNum);
+		this.add(bal);
+	}
 	///////////////////// OVERRIDDEN METHODS //////////////////////////////////////////
 	
 	/*
@@ -90,5 +140,15 @@ public class HomeView extends JPanel implements ActionListener {
 		if(source.equals(logoutButton)) {
 			manager.logout();
 		}
+		if(source.equals(depositButton)) {
+			manager.switchTo(ATM.DEPOSIT_VIEW);
+		}
+		if(source.equals(withdrawButton)) {
+			manager.switchTo(ATM.WITHDRAW_VIEW);
+		}
+		if(source.equals(transferButton)) {
+			manager.switchTo(ATM.TRANSFER_VIEW);
+		}
+		
 	}
 }

@@ -10,6 +10,7 @@ import data.Database;
 import model.BankAccount;
 import model.User;
 import view.ATM;
+import view.HomeView;
 import view.LoginView;
 
 public class ViewManager {
@@ -18,7 +19,6 @@ public class ViewManager {
 	private Database db;					// a reference to the database
 	private BankAccount account;			// the user's bank account
 	private BankAccount destination;		// an account to which the user can transfer funds
-	
 	/**
 	 * Constructs an instance (or object) of the ViewManager class.
 	 * 
@@ -48,8 +48,25 @@ public class ViewManager {
 		db.insertAccount(account);
 	}
 	
-	public void cancelCreate() {
-		switchTo(ATM.LOGIN_VIEW);
+	public double showBal() {
+		long accountNumber = account.getAccountNumber();
+		double bal = db.getAccount(accountNumber).getBalance();
+		return bal;
+	}
+	
+	public String showName() {
+		String fName = account.getUser().getFirstName();
+		String lName = account.getUser().getLastName();
+		return(fName + " " + lName);
+	}
+	
+	public long showAcctNum() {
+		long accountNumber = account.getAccountNumber();
+		return accountNumber;
+	}
+	
+	public int deposit(double amount) {
+		return (account.deposit(amount));
 	}
 	public void login(String accountNumber, char[] pin) {
 		LoginView lv = (LoginView) views.getComponents()[ATM.LOGIN_VIEW_INDEX];
@@ -60,6 +77,8 @@ public class ViewManager {
 			if (account == null) {
 				lv.updateErrorMessage("Invalid account number and/or PIN.");
 			} else {
+				HomeView hv = (HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX];
+				hv.initUserInfo();
 				switchTo(ATM.HOME_VIEW);
 				lv.clear();
 			}
@@ -95,7 +114,10 @@ public class ViewManager {
 	 */
 	
 	public void switchTo(String view) {
+//		if(view == "HOME_VIEW") {
+//		}
 		((CardLayout) views.getLayout()).show(views, view);
+		
 	}
 	
 	/**

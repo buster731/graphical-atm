@@ -298,7 +298,7 @@ public class CreateView extends JPanel implements ActionListener {
 		}
 		
 		if(source.equals(cancelButton)) {
-			manager.cancelCreate();
+			manager.switchTo(ATM.LOGIN_VIEW);
 		}
 		// TODO
 		//
