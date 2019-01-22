@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +24,17 @@ public class TransferView extends JPanel implements ActionListener {
 	private JButton cancelButton;
 	private JTextField transferField;
 	private JTextField destAcctField;
+	private JLabel errorMessageLabel;		// label for potential error messages
+
+	
+	public void updateErrorMessage(String errorMessage) {
+		errorMessageLabel.setText(errorMessage);
+	}
+	
+	public void clear() {
+		transferField.setText("");
+		errorMessageLabel.setText("");
+	}
 	
 	public TransferView(ViewManager manager) {
 		super();
@@ -38,6 +50,8 @@ public class TransferView extends JPanel implements ActionListener {
 		initCancelButton();
 		initTransferField();
 		initDestAcctField();
+		initQuestion();
+		initErrorMessageLabel();
 	}
 	
 	private void initConfirmButton() {
@@ -82,7 +96,23 @@ public class TransferView extends JPanel implements ActionListener {
 		this.add(destAcctField);
 	}
 	
+	private void initQuestion() {
+		JLabel much = new JLabel("How much would you like to transfer and to what account?");
+		much.setBounds(95, 85, 350, 55); 
+		much.setLabelFor(transferField);
+		much.setFont(new Font("DialogInput", Font.BOLD, 14));
+		
+		this.add(much);
+	}
 	
+	private void initErrorMessageLabel() {
+		errorMessageLabel = new JLabel("", SwingConstants.CENTER);
+		errorMessageLabel.setBounds(0, 350, 500, 35);
+		errorMessageLabel.setFont(new Font("DialogInput", Font.ITALIC, 14));
+		errorMessageLabel.setForeground(Color.RED);
+		
+		this.add(errorMessageLabel);
+	}
 	
 	private void writeObject(ObjectOutputStream oos) throws IOException {
 		throw new IOException("ERROR: The TransferView class is not serializable.");
@@ -94,7 +124,9 @@ public class TransferView extends JPanel implements ActionListener {
 		Object source = e.getSource();
 
 		if(source.equals(confirmButton)) {
-			//account balance -= value of transfer field, dest account balance += value
+			long tranAcct = Long.parseLong(destAcctField.getText());
+			double tranBal = Double.parseDouble(transferField.getText());
+			manager.transfer(tranAcct, tranBal);
 		}
 		if(source.equals(cancelButton)) {
 			manager.switchTo(ATM.HOME_VIEW);

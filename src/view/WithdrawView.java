@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +23,17 @@ public class WithdrawView extends JPanel implements ActionListener {
 	private JButton confirmButton;
 	private JButton cancelButton;
 	private JTextField withdrawField;
+	private JLabel errorMessageLabel;		// label for potential error messages
+
+	
+	public void updateErrorMessage(String errorMessage) {
+		errorMessageLabel.setText(errorMessage);
+	}
+	
+	public void clear() {
+		withdrawField.setText("");
+		errorMessageLabel.setText("");
+	}
 	
 	public WithdrawView(ViewManager manager) {
 		super();
@@ -36,7 +48,8 @@ public class WithdrawView extends JPanel implements ActionListener {
 		initConfirmButton();
 		initCancelButton();
 		initWithdrawField();
-	
+		initQuestion();
+		initErrorMessageLabel();
 	}
 	
 	private void initConfirmButton() {
@@ -69,7 +82,23 @@ public class WithdrawView extends JPanel implements ActionListener {
 	}
 	
 	
+	private void initQuestion() {
+		JLabel much = new JLabel("How much would you like to withdraw?");
+		much.setBounds(95, 85, 350, 55); 
+		much.setLabelFor(withdrawField);
+		much.setFont(new Font("DialogInput", Font.BOLD, 14));
+		
+		this.add(much);
+	}
 	
+	private void initErrorMessageLabel() {
+		errorMessageLabel = new JLabel("", SwingConstants.CENTER);
+		errorMessageLabel.setBounds(0, 350, 500, 35);
+		errorMessageLabel.setFont(new Font("DialogInput", Font.ITALIC, 14));
+		errorMessageLabel.setForeground(Color.RED);
+		
+		this.add(errorMessageLabel);
+	}
 	
 	
 	private void writeObject(ObjectOutputStream oos) throws IOException {
@@ -82,7 +111,16 @@ public class WithdrawView extends JPanel implements ActionListener {
 		Object source = e.getSource();
 
 		if(source.equals(confirmButton)) {
-			//account balance -= value of withdraw field
+			try{
+				
+				double amount = Double.parseDouble(withdrawField.getText());
+				manager.withdraw(amount);
+			
+			}
+			catch(NumberFormatException e1) {
+				updateErrorMessage("Invalid withdraw amount");
+				e1.printStackTrace();
+			}
 		}
 		if(source.equals(cancelButton)) {
 			manager.switchTo(ATM.HOME_VIEW);

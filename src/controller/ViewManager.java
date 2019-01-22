@@ -12,6 +12,9 @@ import model.User;
 import view.ATM;
 import view.HomeView;
 import view.LoginView;
+import view.DepositView;
+import view.WithdrawView;
+import view.TransferView;
 
 public class ViewManager {
 	
@@ -65,8 +68,79 @@ public class ViewManager {
 		return accountNumber;
 	}
 	
-	public int deposit(double amount) {
-		return (account.deposit(amount));
+
+	
+	public void deposit(double amount) {		
+		int worked = account.deposit(amount);
+		if(worked == 3) {
+			DepositView dv = (DepositView) views.getComponents()[ATM.DEPOSIT_VIEW_INDEX];
+			dv.clear();
+			db.updateAccount(account);
+			HomeView hv = (HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX];
+			hv.updateUserInfo();
+			switchTo(ATM.HOME_VIEW);
+			
+		}
+		else if(worked == 0){
+			DepositView dv = (DepositView) views.getComponents()[ATM.DEPOSIT_VIEW_INDEX];
+			dv.updateErrorMessage("Invalid deposit amount");
+			dv.clear();
+		}
+
+		else {
+			DepositView dv = (DepositView) views.getComponents()[ATM.DEPOSIT_VIEW_INDEX];
+			dv.updateErrorMessage("Invalid deposit amount");
+			dv.clear();
+		}
+	}
+	
+	public void withdraw(double amount) {		
+		int worked = account.withdraw(amount);
+		if(worked == 1){
+			WithdrawView wv = (WithdrawView) views.getComponents()[ATM.WITHDRAW_VIEW_INDEX];
+			wv.updateErrorMessage("Insufficient Funds");
+			wv.clear();
+		}
+		else if(worked == 0){
+			WithdrawView wv = (WithdrawView) views.getComponents()[ATM.WITHDRAW_VIEW_INDEX];
+			wv.updateErrorMessage("Invalid withdraw amount");
+			wv.clear();
+		}
+		else if(worked == 3) {
+			WithdrawView wv = (WithdrawView) views.getComponents()[ATM.WITHDRAW_VIEW_INDEX];
+			wv.clear();
+			db.updateAccount(account);
+			HomeView hv = (HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX];
+			hv.updateUserInfo();
+			switchTo(ATM.HOME_VIEW);
+		}
+		else {
+			WithdrawView wv = (WithdrawView) views.getComponents()[ATM.WITHDRAW_VIEW_INDEX];
+			wv.updateErrorMessage("Invalid Withdraw Amount");
+			wv.clear();
+		}
+	}
+	
+	public void transfer(long tranAcct, double amount) {
+		int worked = account.transfer(db.getAccount(tranAcct), amount);
+		TransferView tv = (TransferView) views.getComponents()[ATM.TRANSFER_VIEW_INDEX];
+		switch(worked) {
+		case 0:
+			tv.updateErrorMessage("Invalid Transfer Amount");
+			tv.clear();
+		case 1:
+			tv.updateErrorMessage("Insufficient Funds");
+			tv.clear();
+		case 2:
+			tv.updateErrorMessage("Account Not Found");
+			tv.clear();
+		case 3:
+			db.updateAccount(account);
+			db.updateAccount(db.getAccount(tranAcct));
+			HomeView hv = (HomeView) views.getComponents()[ATM.HOME_VIEW_INDEX];
+			hv.updateUserInfo();
+			switchTo(ATM.HOME_VIEW);
+		}
 	}
 	public void login(String accountNumber, char[] pin) {
 		LoginView lv = (LoginView) views.getComponents()[ATM.LOGIN_VIEW_INDEX];

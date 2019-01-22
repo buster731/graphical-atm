@@ -13,6 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import controller.ViewManager;
+import view.DepositView;
+import view.WithdrawView;
+import view.TransferView;
 
 @SuppressWarnings("serial")
 public class HomeView extends JPanel implements ActionListener {
@@ -22,6 +25,9 @@ public class HomeView extends JPanel implements ActionListener {
 	private JButton depositButton;
 	private JButton withdrawButton;
 	private JButton transferButton;
+	public JLabel bal;
+	DepositView dv;
+	WithdrawView wv;
 	
 	/**
 	 * Constructs an instance (or objects) of the HomeView class.
@@ -117,13 +123,18 @@ public class HomeView extends JPanel implements ActionListener {
 		acctNum.setBounds(40, 10, 300, 45);
 		acctNum.setFont(new Font("DialogInput", Font.BOLD, 14));
 		
-		JLabel bal = new JLabel("Current Balance: $" + manager.showBal(), SwingConstants.RIGHT);
+		bal = new JLabel("Current Balance: $" + manager.showBal(), SwingConstants.RIGHT);
 		bal.setBounds(138, 95, 200, 45);
 		bal.setFont(new Font("DialogInput", Font.BOLD, 14));
 		
 		this.add(name);
 		this.add(acctNum);
-		this.add(bal);
+		this.add(bal);		
+	}
+	
+	public void updateUserInfo() {
+		bal.setText("");
+		bal.setText("Current Balance: $" + manager.showBal());
 	}
 	///////////////////// OVERRIDDEN METHODS //////////////////////////////////////////
 	
@@ -141,10 +152,23 @@ public class HomeView extends JPanel implements ActionListener {
 			manager.logout();
 		}
 		if(source.equals(depositButton)) {
-			manager.switchTo(ATM.DEPOSIT_VIEW);
+			try {
+				dv.clear();
+				manager.switchTo(ATM.DEPOSIT_VIEW);			
+			} 
+			catch (NullPointerException e2) {
+				manager.switchTo(ATM.DEPOSIT_VIEW);
+			}
+
 		}
 		if(source.equals(withdrawButton)) {
-			manager.switchTo(ATM.WITHDRAW_VIEW);
+			try {
+				wv.clear();
+				manager.switchTo(ATM.WITHDRAW_VIEW);			
+			}
+			catch (NullPointerException e2) {
+				manager.switchTo(ATM.WITHDRAW_VIEW);
+			}
 		}
 		if(source.equals(transferButton)) {
 			manager.switchTo(ATM.TRANSFER_VIEW);

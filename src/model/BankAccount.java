@@ -118,7 +118,6 @@ public class BankAccount {
 			return ATM.INVALID_AMOUNT;
 		} else {
 			balance = balance + amount;
-			
 			return ATM.SUCCESS;
 		}
 	}

@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,10 +23,16 @@ public class DepositView extends JPanel implements ActionListener {
 	private JButton confirmButton;
 	private JButton cancelButton;
 	private JTextField depositField;
-	private JLabel question;
-	private JLabel success;
-	private JLabel fail;
+	private JLabel errorMessageLabel;		// label for potential error messages
 	
+	public void updateErrorMessage(String errorMessage) {
+		errorMessageLabel.setText(errorMessage);
+	}
+	
+	public void clear() {
+		depositField.setText("");
+		errorMessageLabel.setText("");
+	}
 	public DepositView(ViewManager manager) {
 		super();
 		
@@ -40,7 +47,8 @@ public class DepositView extends JPanel implements ActionListener {
 		initCancelButton();
 		initDepositField();
 		initQuestion();
-	
+		initErrorMessageLabel();
+
 	}
 	
 	private void initConfirmButton() {
@@ -81,11 +89,15 @@ public class DepositView extends JPanel implements ActionListener {
 		this.add(much);
 	}
 	
-	/*private void initSuccess() {
-		JLabel success = new JLabel("Deposit successful. Your new balance is: " + manager.showBal());
-		success.setBounds(75, 435, 350, 65);
+	private void initErrorMessageLabel() {
+		errorMessageLabel = new JLabel("", SwingConstants.CENTER);
+		errorMessageLabel.setBounds(0, 350, 500, 35);
+		errorMessageLabel.setFont(new Font("DialogInput", Font.ITALIC, 14));
+		errorMessageLabel.setForeground(Color.RED);
+		
+		this.add(errorMessageLabel);
 	}
-	*/
+	
 	private void writeObject(ObjectOutputStream oos) throws IOException {
 		throw new IOException("ERROR: The DepositView class is not serializable.");
 	}
@@ -96,18 +108,22 @@ public class DepositView extends JPanel implements ActionListener {
 		Object source = e.getSource();
 
 		if(source.equals(confirmButton)) {
-			double amount = Double.parseDouble(depositField.getText());
-			int worked = manager.deposit(amount);
-			if(worked == 3) {
-				//initSuccess();
+			try{
+
+				double amount = Double.parseDouble(depositField.getText());
+				manager.deposit(amount);
+				
 			}
-			else{
-				//initError();
+			catch(NumberFormatException e1) {
+				clear();
+				updateErrorMessage("Invalid deposit amount");
+				e1.printStackTrace();
 			}
-			//account balance += value of deposit field
 		}
 		if(source.equals(cancelButton)) {
+			clear();
 			manager.switchTo(ATM.HOME_VIEW);
 		}
+		
 	}
 }
