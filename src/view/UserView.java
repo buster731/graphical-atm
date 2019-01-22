@@ -53,7 +53,7 @@ public class UserView extends JPanel implements ActionListener {
 		initReturnButton();
 		initErrorMessageLabel();
 		initNameField();
-//		initDOBField();
+		initDOBField();
 		initPhoneNumField();
 		initAddressField();
 		initCityField();
@@ -69,21 +69,22 @@ public class UserView extends JPanel implements ActionListener {
 		
 		NameField = new JTextField(20);
 		NameField.setBounds(205, 25, 200, 35);
-	//	NameField.setText(manager.showName());
+		NameField.setText(manager.showName());
 		
 		this.add(label);
 		this.add(NameField);
 	}
 
 
-//	private void initDOBField() {
+	private void initDOBField() {
 	//NEED TO FINISH CODING THIS PART!!!! IT NEEDS TO BE LABELS FOR EVERYTHING
 		//THE UPDATE THING SHOULD BE SAME AS CREATE VIEW BUT SET TEXT TO OLD VALUES
 
-//		MonthBox.setBounds(205, 145, 50, 35);
-	//	JLabel DOB = new JLabel("Date of Birth: " + manager.showDOB(), SwingConstants.RIGHT);
-//		this.add(DOB);
-//	}
+		JLabel DOB = new JLabel("Date of Birth: " + manager.showDOB(), SwingConstants.RIGHT);
+		DOB.setBounds(145, 145, 150, 35);
+		this.add(DOB);
+		
+	}
 	
 	private void initAddressField() {
 		JLabel label = new JLabel("Street Address", SwingConstants.RIGHT);
