@@ -25,9 +25,11 @@ public class HomeView extends JPanel implements ActionListener {
 	private JButton depositButton;
 	private JButton withdrawButton;
 	private JButton transferButton;
+	private JButton informationButton;
 	public JLabel bal;
 	DepositView dv;
 	WithdrawView wv;
+	UserView uv;
 	
 	/**
 	 * Constructs an instance (or objects) of the HomeView class.
@@ -61,7 +63,7 @@ public class HomeView extends JPanel implements ActionListener {
 		initDepositButton();
 		initWithdrawButton();
 		initTransferButton();
-
+		initInformationButton();
 		// TODO
 		//
 		// this is where you should build the HomeView (i.e., all the components that
@@ -114,6 +116,13 @@ public class HomeView extends JPanel implements ActionListener {
 		this.add(transferButton);
 	}
 	
+	public void initInformationButton() {
+		informationButton = new JButton("Personal Information");
+		informationButton.setBounds(225, 300, 150, 40);
+		informationButton.addActionListener(this);
+		
+		this.add(informationButton);
+	}
 	public void initUserInfo() {
 		JLabel name = new JLabel("User Name: " + manager.showName(), SwingConstants.RIGHT);
 		name.setBounds(63, 60, 300, 45);
@@ -172,6 +181,10 @@ public class HomeView extends JPanel implements ActionListener {
 		}
 		if(source.equals(transferButton)) {
 			manager.switchTo(ATM.TRANSFER_VIEW);
+		}
+		if(source.equals(informationButton)) {
+			uv.update();
+			manager.switchTo(ATM.USER_VIEW);
 		}
 		
 	}
