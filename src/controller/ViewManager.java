@@ -73,8 +73,8 @@ public class ViewManager {
 		String pin1 = "" + pin;
 		return pin1;
 	}
-	public int showDOB() {
-		int DOB = account.getUser().getDob();
+	public String showDOB() {
+		String DOB = account.getUser().getFormattedDob();
 		return DOB;
 	}
 	

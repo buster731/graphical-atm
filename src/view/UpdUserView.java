@@ -23,14 +23,14 @@ import controller.ViewManager;
 public class UpdUserView extends JPanel implements ActionListener {
 		private ViewManager manager;		// manages interactions between the views, model, and database
 		private JButton confirmButton;
-		private JButton cancelButton;
+		private JButton cancelButton;		
+		private JLabel errorMessageLabel;		// label for potential error messages		
 		private JPasswordField pinField;
 		private JTextField AddressField;
 		private JTextField CityField;
 		private JComboBox<?> StateField;
 		private JTextField ZipField;
 		private JLabel address;
-		private JLabel errorMessageLabel;		// label for potential error messages
 		private JFormattedTextField phoneNumField;
 		private JLabel DOB;
 		private JLabel name;

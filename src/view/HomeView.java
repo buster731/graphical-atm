@@ -183,9 +183,16 @@ public class HomeView extends JPanel implements ActionListener {
 			manager.switchTo(ATM.TRANSFER_VIEW);
 		}
 		if(source.equals(informationButton)) {
+			try {
 			uv.update();
 			manager.switchTo(ATM.USER_VIEW);
-		}
+			}
+			catch (NullPointerException e2) {
+				e2.printStackTrace();
+				manager.switchTo(ATM.USER_VIEW);
+				
+			}
 		
+		}
 	}
 }
