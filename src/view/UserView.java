@@ -16,24 +16,24 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import controller.ViewManager;
+import view.UpdUserView;
 
 @SuppressWarnings("serial")
 public class UserView extends JPanel implements ActionListener {
 	private ViewManager manager;		// manages interactions between the views, model, and database
 	private JButton editButton;
 	private JButton returnButton;
-	private JLabel errorMessageLabel;
-	private JTextField NameField;
-	private JComboBox<?> MonthBox;
-	private JComboBox<?> DateBox;
-	private JComboBox<?> YearBox;
-	private JTextField PhoneNumField;
-	private JTextField PhoneNumField1;
-	private JTextField PhoneNumField2;
-	private JTextField AddressField;
-	private JTextField CityField;
-	private JComboBox<?> StateField;
-	private JTextField ZipField;// label for potential error messages
+	private JLabel errorMessageLabel;// label for potential error messages
+	private JLabel name;
+	private JLabel DOB;
+	private JLabel address;
+	private JLabel acctNum;
+	private JLabel phoneNum;
+	private JLabel city;
+	private JLabel state;
+	private JLabel zip;
+	
+	UpdUserView udv;
 	
 	public void updateErrorMessage(String errorMessage) {
 		errorMessageLabel.setText(errorMessage);
@@ -49,122 +49,89 @@ public class UserView extends JPanel implements ActionListener {
 	private void initialize() {
 		this.setLayout(null);
 		
+		try {
 		initEditButton();
 		initReturnButton();
 		initErrorMessageLabel();
-		initNameField();
-		initDOBField();
-		initPhoneNumField();
-		initAddressField();
-		initCityField();
-		initStateField();
-		initZipField();
-	}
+		initNameLabel();
+		initDOBLabel();
+		initPhoneNumLabel();
+		initAddressLabel();
+		initCityLabel();
+		initStateLabel();
+		initZipLabel();
+		initAccountNumLabel();
+		}
+		catch (NullPointerException e1) {
+			e1.printStackTrace();
+		}
+		}
 	
-	private void initNameField() {
-		JLabel label = new JLabel("Name: ", SwingConstants.RIGHT);
-		label.setBounds(100, 25, 95, 35);
-		label.setLabelFor(NameField);
-		label.setFont(new Font("DialogInput", Font.BOLD, 14));
+	private void initAccountNumLabel() {
 		
-		NameField = new JTextField(20);
-		NameField.setBounds(205, 25, 200, 35);
-		NameField.setText(manager.showName());
+		acctNum = new JLabel("Account Number: ", SwingConstants.RIGHT);
+		acctNum.setBounds(40, 10, 300, 45);
+		acctNum.setFont(new Font("DialogInput", Font.BOLD, 14));
 		
-		this.add(label);
-		this.add(NameField);
+		this.add(acctNum);
+	}
+	private void initNameLabel() {
+		name = new JLabel("Name: ", SwingConstants.RIGHT);
+		name.setBounds(100, 65, 95, 35);
+		name.setFont(new Font("DialogInput", Font.BOLD, 14));
+		
+		this.add(name);
 	}
 
 
-	private void initDOBField() {
+	private void initDOBLabel() {
 	//NEED TO FINISH CODING THIS PART!!!! IT NEEDS TO BE LABELS FOR EVERYTHING
 		//THE UPDATE THING SHOULD BE SAME AS CREATE VIEW BUT SET TEXT TO OLD VALUES
 
-		JLabel DOB = new JLabel("Date of Birth: " + manager.showDOB(), SwingConstants.RIGHT);
-		DOB.setBounds(145, 145, 150, 35);
+		DOB = new JLabel("Date of Birth: ", SwingConstants.RIGHT);
+		DOB.setBounds(145, 105, 150, 35);
 		this.add(DOB);
 		
 	}
 	
-	private void initAddressField() {
-		JLabel label = new JLabel("Street Address", SwingConstants.RIGHT);
-		label.setBounds(80, 185, 115, 35);
-		label.setLabelFor(AddressField);
-		label.setFont(new Font("DialogInput", Font.BOLD, 14));
+	
+	
+	private void initPhoneNumLabel() {
+		phoneNum = new JLabel("Phone Number: ", SwingConstants.RIGHT);
+		phoneNum.setBounds(72, 265, 150, 35);
+		this.add(phoneNum);
+	}
+
+	private void initAddressLabel() {
+		address = new JLabel("Street Address: ", SwingConstants.RIGHT);
+		address.setBounds(80, 145, 300, 35);
+		address.setFont(new Font("DialogInput", Font.BOLD, 14));
 		
-		AddressField = new JTextField(20);
-		AddressField.setBounds(205, 185, 200, 35);
-		
-		this.add(label);
-		this.add(AddressField);
+		this.add(address);
 	}
 	
-	private void initPhoneNumField() {
-		JLabel label = new JLabel("Phone Number", SwingConstants.RIGHT);
-		label.setBounds(72, 225, 125, 35);
-		JLabel label1 = new JLabel(" - ", SwingConstants.RIGHT);
-		label1.setBounds(260, 225, 50, 35);
-		JLabel label2 = new JLabel(" - ", SwingConstants.RIGHT);
-		label2.setBounds(320, 225, 50, 35);
-		label.setLabelFor(PhoneNumField);
-		label.setFont(new Font("DialogInput", Font.BOLD, 14));
-		label1.setLabelFor(PhoneNumField1);
-		label1.setFont(new Font("DialogInput", Font.BOLD, 14));
-		label2.setLabelFor(PhoneNumField2);
-		label2.setFont(new Font("DialogInput", Font.BOLD, 14));
+	private void initCityLabel() {
+		city = new JLabel("City: ", SwingConstants.RIGHT);
+		city.setBounds(100, 185, 95, 35);
+		city.setFont(new Font("DialogInput", Font.BOLD, 14));
 		
-		PhoneNumField = new JTextField(20);
-		PhoneNumField.setBounds(209, 225, 40, 35);
-		PhoneNumField1 = new JTextField(20);
-		PhoneNumField1.setBounds(265, 225, 40, 35);
-		PhoneNumField2 = new JTextField(20);
-		PhoneNumField2.setBounds(325, 225, 40, 35);
-		
-		this.add(label);
-		this.add(PhoneNumField);
-		this.add(PhoneNumField1);
-		this.add(PhoneNumField2);
+		this.add(city);
 	}
 	
-	private void initCityField() {
-		JLabel label = new JLabel("City", SwingConstants.RIGHT);
-		label.setBounds(100, 265, 95, 35);
-		label.setLabelFor(CityField);
-		label.setFont(new Font("DialogInput", Font.BOLD, 14));
+	private void initStateLabel() {
+		state = new JLabel("State: ", SwingConstants.RIGHT);
+		state.setBounds(100, 305, 100, 35);
+		state.setFont(new Font("DialogInput", Font.BOLD, 14));
 		
-		CityField = new JTextField(20);
-		CityField.setBounds(205, 265, 200, 35);
-		
-		this.add(label);
-		this.add(CityField);
+		this.add(state);
 	}
 	
-	private void initStateField() {
-		String[] states = {"AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"};
+	private void initZipLabel() {
+		zip = new JLabel("Zip: ", SwingConstants.RIGHT);
+		zip.setBounds(100, 225, 95, 35);
+		zip.setFont(new Font("DialogInput", Font.BOLD, 14));
 		
-		StateField = new JComboBox<Object>(states);
-		JLabel label = new JLabel("State", SwingConstants.RIGHT);
-		label.setBounds(100, 305, 95, 35);
-		label.setLabelFor(StateField);
-		label.setFont(new Font("DialogInput", Font.BOLD, 14));
-		
-		StateField.setBounds(205, 305, 100, 35);
-		
-		this.add(label);
-		this.add(StateField);
-	}
-	
-	private void initZipField() {
-		JLabel label = new JLabel("Zip", SwingConstants.RIGHT);
-		label.setBounds(100, 345, 95, 35);
-		label.setLabelFor(ZipField);
-		label.setFont(new Font("DialogInput", Font.BOLD, 14));
-		
-		ZipField = new JTextField(20);
-		ZipField.setBounds(205, 345, 200, 35);
-		
-		this.add(label);
-		this.add(ZipField);
+		this.add(zip);
 	}
 	
 	private void initEditButton() {
@@ -192,7 +159,18 @@ public class UserView extends JPanel implements ActionListener {
 		this.add(errorMessageLabel);
 	}
 	
-	
+	public void update() {
+		
+		updateErrorMessage("");
+		name.setText("Name: " + manager.showName());
+		DOB.setText("Date of Birth: " + manager.showDOB());
+		phoneNum.setText("Phone Number: " + manager.showPhoneNum());
+		address.setText("Street Address: " + manager.showAddress());
+		city.setText("City: " + manager.showCity());
+		state.setText("State: " + manager.showState());
+		zip.setText("Zip: " + manager.showZip());
+		acctNum.setText("Account Number: " + manager.showAcctNum());
+	}
 	
 	private void writeObject(ObjectOutputStream oos) throws IOException {
 		throw new IOException("ERROR: The DepositView class is not serializable.");
@@ -204,11 +182,12 @@ public class UserView extends JPanel implements ActionListener {
 		Object source = e.getSource();
 
 		if(source.equals(editButton)) {
-			
+			udv.clear();
+			manager.switchTo(ATM.UPDUSER_VIEW);
 		}
 		
 		if(source.equals(returnButton)) {
-			manager.switchTo(ATM.UPDUSER_VIEW);
+			manager.switchTo(ATM.HOME_VIEW);
 		}
 		
 	}
