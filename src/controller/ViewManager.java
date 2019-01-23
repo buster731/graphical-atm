@@ -68,8 +68,40 @@ public class ViewManager {
 		return accountNumber;
 	}
 	
-
+	public String showPin() {
+		int pin = account.getUser().getPin();
+		String pin1 = "" + pin;
+		return pin1;
+	}
+	public int showDOB() {
+		int DOB = account.getUser().getDob();
+		return DOB;
+	}
 	
+	public String showAddress() {
+		String address = account.getUser().getStreetAddress();
+		return address;
+	}
+	
+	public String showCity() {
+		String City = account.getUser().getCity();
+		return City;
+	}
+	
+	public String showPhoneNum() {
+		String phoneNum = account.getUser().getFormattedPhone();
+		return phoneNum;
+	}
+	
+	public String showState() {
+		String state = account.getUser().getState();
+		return state;
+	}
+	
+	public String showZip() {
+		String zip = account.getUser().getZip();
+		return zip;
+	}
 	public void deposit(double amount) {		
 		int worked = account.deposit(amount);
 		if(worked == 3) {
@@ -141,6 +173,16 @@ public class ViewManager {
 			hv.updateUserInfo();
 			switchTo(ATM.HOME_VIEW);
 		}
+	}
+	
+	public void changeInfo(String state, String City, String Address, String Zip, int pin, long PhoneNum) {
+		account.getUser().setCity(City);
+		account.getUser().setState(state);
+		account.getUser().setStreetAddress(Address);
+		account.getUser().setZip(Zip);
+		account.getUser().setPin(account.getUser().getPin(), pin);
+		account.getUser().setPhone(PhoneNum);
+		db.updateAccount(account);
 	}
 	public void login(String accountNumber, char[] pin) {
 		LoginView lv = (LoginView) views.getComponents()[ATM.LOGIN_VIEW_INDEX];
